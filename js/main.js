@@ -290,3 +290,16 @@ var counter = function() {
 		});
 	});
 
+	document.addEventListener('DOMContentLoaded', function() {
+		// Получаем все карточки туров
+		const tourCards = document.querySelectorAll('.tour-card-3d');
+		
+		// Добавляем обработчик события клика для каждой карточки
+		tourCards.forEach(card => {
+		card.addEventListener('click', function() {
+			// Переключаем класс 'flipped' на внутреннем элементе карточки
+			const innerCard = this.querySelector('.tour-card-inner');
+			innerCard.classList.toggle('flipped');
+		});
+		});
+	});
