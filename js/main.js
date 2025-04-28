@@ -290,24 +290,29 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-	// Получаем все карточки туров
-	const tourCards = document.querySelectorAll('.tour-card-3d');
-
-	// Добавляем обработчик события клика для каждой карточки
-	tourCards.forEach(card => {
-		card.addEventListener('click', function () {
-			// Переключаем класс 'flipped' на внутреннем элементе карточки
-			const innerCard = this.querySelector('.tour-card-inner');
-			innerCard.classList.toggle('flipped');
-
-			// Если карточка перевернута, устанавливаем таймер для обратного переворота
-			if (innerCard.classList.contains('flipped')) {
-				// Устанавливаем таймер на 5 секунд (5000 мс)
-				setTimeout(() => {
-					innerCard.classList.remove('flipped');
-				}, 5000); // Время в миллисекундах, через которое карточка перевернется обратно
-			}
-		});
-	});
-});	
+ddocument.addEventListener('DOMContentLoaded', function() {
+    // Получаем все карточки туров
+    const tourCards = document.querySelectorAll('.tour-card-3d');
+    
+    // Добавляем обработчик события клика для каждой карточки
+    tourCards.forEach(card => {
+        // Получаем переднюю часть карточки
+        const frontCard = card.querySelector('.tour-card-front');
+        // Получаем внутренний элемент карточки
+        const innerCard = card.querySelector('.tour-card-inner');
+        
+        // Добавляем обработчик только на переднюю часть карточки
+        frontCard.addEventListener('click', function(event) {
+            // Останавливаем всплытие события, чтобы оно не дошло до родительских элементов
+            event.stopPropagation();
+            
+            // Переворачиваем карточку
+            innerCard.classList.add('flipped');
+            
+            // Устанавливаем таймер для обратного переворота
+            setTimeout(() => {
+                innerCard.classList.remove('flipped');
+            }, 30000); // 5 секунд до обратного переворота
+        });
+    });
+});
