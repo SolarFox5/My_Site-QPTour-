@@ -4,57 +4,56 @@ AOS.init({
 	once: false
 });
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
 
 	"use strict";
 
 	$(".loader").delay(1000).fadeOut("slow");
-	$("#overlayer").delay(1000).fadeOut("slow");
+	$("#overlayer").delay(1000).fadeOut("slow");	
 
-	var siteMenuClone = function () {
-
-		$('.js-clone-nav').each(function () {
+	// Клонирование меню для мобильной версии
+	var siteMenuClone = function() {
+		// Клонирование навигационного меню для мобильной версии
+		$('.js-clone-nav').each(function() {
 			var $this = $(this);
 			$this.clone().attr('class', 'site-nav-wrap').appendTo('.site-mobile-menu-body');
 		});
 
-
-		setTimeout(function () {
-
+		// Добавление стрелок для выпадающих меню в мобильной версии
+		setTimeout(function() {
 			var counter = 0;
-			$('.site-mobile-menu .has-children').each(function () {
+			$('.site-mobile-menu .has-children').each(function(){
 				var $this = $(this);
-
+				
 				$this.prepend('<span class="arrow-collapse collapsed">');
 
 				$this.find('.arrow-collapse').attr({
-					'data-toggle': 'collapse',
-					'data-target': '#collapseItem' + counter,
+					'data-toggle' : 'collapse',
+					'data-target' : '#collapseItem' + counter,
 				});
 
 				$this.find('> ul').attr({
-					'class': 'collapse',
-					'id': 'collapseItem' + counter,
+					'class' : 'collapse',
+					'id' : 'collapseItem' + counter,
 				});
 
 				counter++;
-
 			});
-
 		}, 1000);
 
-		$('body').on('click', '.arrow-collapse', function (e) {
+		// Обработка клика по стрелке выпадающего меню
+		$('body').on('click', '.arrow-collapse', function(e) {
 			var $this = $(this);
 			if ($this.closest('li').find('.collapse').hasClass('show')) {
 				$this.removeClass('active');
 			} else {
 				$this.addClass('active');
 			}
-			e.preventDefault();
-
+			e.preventDefault();  
 		});
 
-		$(window).resize(function () {
+		// Закрытие мобильного меню при изменении размера окна
+		$(window).resize(function() {
 			var $this = $(this),
 				w = $this.width();
 
@@ -63,9 +62,10 @@ jQuery(document).ready(function ($) {
 					$('body').removeClass('offcanvas-menu');
 				}
 			}
-		})
+		});
 
-		$('body').on('click', '.js-menu-toggle', function (e) {
+		// Переключение мобильного меню при клике на кнопку
+		$('body').on('click', '.js-menu-toggle', function(e) {
 			var $this = $(this);
 			e.preventDefault();
 
@@ -76,31 +76,31 @@ jQuery(document).ready(function ($) {
 				$('body').addClass('offcanvas-menu');
 				$this.addClass('active');
 			}
-		})
+		}); 
 
-		// click outisde offcanvas
-		$(document).mouseup(function (e) {
+		// Закрытие мобильного меню при клике вне его области
+		$(document).mouseup(function(e) {
 			var container = $(".site-mobile-menu");
 			if (!container.is(e.target) && container.has(e.target).length === 0) {
-				if ($('body').hasClass('offcanvas-menu')) {
+				if ( $('body').hasClass('offcanvas-menu') ) {
 					$('body').removeClass('offcanvas-menu');
 				}
 			}
 		});
-	};
+	}; 
 	siteMenuClone();
 
 
-	var sitePlusMinus = function () {
-		$('.js-btn-minus').on('click', function (e) {
+	var sitePlusMinus = function() {
+		$('.js-btn-minus').on('click', function(e){
 			e.preventDefault();
-			if ($(this).closest('.input-group').find('.form-control').val() != 0) {
+			if ( $(this).closest('.input-group').find('.form-control').val() != 0  ) {
 				$(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) - 1);
 			} else {
 				$(this).closest('.input-group').find('.form-control').val(parseInt(0));
 			}
 		});
-		$('.js-btn-plus').on('click', function (e) {
+		$('.js-btn-plus').on('click', function(e){
 			e.preventDefault();
 			$(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) + 1);
 		});
@@ -108,211 +108,194 @@ jQuery(document).ready(function ($) {
 	// sitePlusMinus();
 
 
-	var siteSliderRange = function () {
-		$("#slider-range").slider({
-			range: true,
-			min: 0,
-			max: 500,
-			values: [75, 300],
-			slide: function (event, ui) {
-				$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-			}
-		});
-		$("#amount").val("$" + $("#slider-range").slider("values", 0) +
-			" - $" + $("#slider-range").slider("values", 1));
+	var siteSliderRange = function() {
+    $( "#slider-range" ).slider({
+    range: true,
+    min: 0,
+    max: 500,
+    values: [ 75, 300 ],
+    slide: function( event, ui ) {
+        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+    }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+    " - $" + $( "#slider-range" ).slider( "values", 1 ) );
 	};
 	// siteSliderRange();
 
 
-
+	
 
 	var siteCarousel = function () {
-		if ($('.nonloop-block-13').length > 0) {
+		if ( $('.nonloop-block-13').length > 0 ) {
 			$('.nonloop-block-13').owlCarousel({
-				center: false,
-				items: 1,
-				loop: true,
+			center: false,
+			items: 1,
+			loop: true,
 				stagePadding: 0,
-				margin: 0,
-				smartSpeed: 1000,
-				autoplay: true,
-				nav: true,
+			margin: 0,
+			smartSpeed: 1000,
+			autoplay: true,
+			nav: true,
 				navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
-				responsive: {
-					600: {
-						margin: 0,
-						nav: true,
-						items: 2
-					},
-					1000: {
-						margin: 0,
-						stagePadding: 0,
-						nav: true,
-						items: 2
-					},
-					1200: {
-						margin: 0,
-						stagePadding: 0,
-						nav: true,
-						items: 3
-					}
-				}
+			responsive:{
+			600:{
+				margin: 0,
+				nav: true,
+			items: 2
+			},
+			1000:{
+				margin: 0,
+				stagePadding: 0,
+				nav: true,
+			items: 2
+			},
+			1200:{
+				margin: 0,
+				stagePadding: 0,
+				nav: true,
+			items: 3
+			}
+			}
 			});
 		}
 
 		$('.slide-one-item').owlCarousel({
-			center: false,
-			items: 1,
-			loop: true,
+		center: false,
+		items: 1,
+		loop: true,
 			stagePadding: 0,
-			margin: 0,
-			smartSpeed: 1500,
-			autoplay: true,
-			pauseOnHover: false,
-			dots: true,
-			nav: true,
-			navText: ['<span class="icon-keyboard_arrow_left">', '<span class="icon-keyboard_arrow_right">']
-		});
+		margin: 0,
+		smartSpeed: 1500,
+		autoplay: true,
+		pauseOnHover: false,
+		dots: true,
+		nav: true,
+		navText: ['<span class="icon-keyboard_arrow_left">', '<span class="icon-keyboard_arrow_right">']
+	});
 	};
 	siteCarousel();
 
+	
 
+	var siteCountDown = function() {
 
-	var siteCountDown = function () {
-
-		$('#date-countdown').countdown('2020/10/10', function (event) {
-			var $this = $(this).html(event.strftime(''
-				+ '<span class="countdown-block"><span class="label">%w</span> weeks </span>'
-				+ '<span class="countdown-block"><span class="label">%d</span> days </span>'
-				+ '<span class="countdown-block"><span class="label">%H</span> hr </span>'
-				+ '<span class="countdown-block"><span class="label">%M</span> min </span>'
-				+ '<span class="countdown-block"><span class="label">%S</span> sec</span>'));
+		$('#date-countdown').countdown('2020/10/10', function(event) {
+		var $this = $(this).html(event.strftime(''
+			+ '<span class="countdown-block"><span class="label">%w</span> weeks </span>'
+			+ '<span class="countdown-block"><span class="label">%d</span> days </span>'
+			+ '<span class="countdown-block"><span class="label">%H</span> hr </span>'
+			+ '<span class="countdown-block"><span class="label">%M</span> min </span>'
+			+ '<span class="countdown-block"><span class="label">%S</span> sec</span>'));
 		});
-
+				
 	};
 	// siteCountDown();
 
-	var siteDatePicker = function () {
+	var siteDatePicker = function() {
 
-		if ($('.datepicker').length > 0) {
+		if ( $('.datepicker').length > 0 ) {
 			$('.datepicker').datepicker();
 		}
 
 	};
 	// siteDatePicker();
 
-	var siteSticky = function () {
-		$(".js-sticky-header").sticky({ topSpacing: 0 });
+	// Функция для "липкой" шапки
+	var siteSticky = function() {
+		$(".js-sticky-header").sticky({topSpacing:0});
 	};
 	siteSticky();
 
-	// navigation
-	var OnePageNavigation = function () {
+	// Навигация по одной странице (плавная прокрутка к якорям)
+	var OnePageNavigation = function() {
 		var navToggler = $('.site-menu-toggle');
 
-		$("body").on("click", ".main-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a[href^='#']", function (e) {
+		$("body").on("click", ".main-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a[href^='#']", function(e) {
 			e.preventDefault();
 
 			var hash = this.hash;
 
 			$('html, body').animate({
 				'scrollTop': $(hash).offset().top - 50
-			}, 600, 'easeInOutExpo', function () {
+			}, 600, 'easeInOutExpo', function() {
 				// window.location.hash = hash;
-
 			});
-
 		});
 	};
 	OnePageNavigation();
 
-	var siteScroll = function () {
-
-
-		$(window).scroll(function () {
-
+	// Функция для изменения шапки при прокрутке
+	var siteScroll = function() {
+		$(window).scroll(function() {
 			var st = $(this).scrollTop();
-
+			
 			if (st > 100) {
 				$('.js-sticky-header').addClass('shrink');
 			} else {
 				$('.js-sticky-header').removeClass('shrink');
 			}
-
-		})
-
+		});
 	};
 	siteScroll();
-	var counter = function () {
 
-		$('#about-section').waypoint(function (direction) {
+	var counter = function() {
+		
+		$('#about-section').waypoint( function( direction ) {
 
-			if (direction === 'down' && !$(this.element).hasClass('ftco-animated')) {
+			if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
 
 				var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',')
-				$('.number > span').each(function () {
+				$('.number > span').each(function(){
 					var $this = $(this),
 						num = $this.data('number');
 					$this.animateNumber(
-						{
-							number: num,
-							numberStep: comma_separator_number_step
-						}, 7000
+					{
+					number: num,
+					numberStep: comma_separator_number_step
+					}, 7000
 					);
 				});
-
+				
 			}
 
-		}, { offset: '95%' });
+		} , { offset: '95%' } );
 
 	}
 	counter();
 
-
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-	const backToTop = document.getElementById('backToTop');
-
-	window.addEventListener('scroll', function () {
-		if (window.pageYOffset > 300) {
-			backToTop.classList.add('visible');
-		} else {
-			backToTop.classList.remove('visible');
-		}
+	
 	});
 
-	backToTop.addEventListener('click', function () {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
+	document.addEventListener('DOMContentLoaded', function() {
+		const backToTop = document.getElementById('backToTop');
+		
+		window.addEventListener('scroll', function() {
+			if (window.pageYOffset > 300) {
+				backToTop.classList.add('visible');
+			} else {
+				backToTop.classList.remove('visible');
+			}
+		});
+	
+		backToTop.addEventListener('click', function() {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
 		});
 	});
-});
 
-ddocument.addEventListener('DOMContentLoaded', function() {
-    // Получаем все карточки туров
-    const tourCards = document.querySelectorAll('.tour-card-3d');
-    
-    // Добавляем обработчик события клика для каждой карточки
-    tourCards.forEach(card => {
-        // Получаем переднюю часть карточки
-        const frontCard = card.querySelector('.tour-card-front');
-        // Получаем внутренний элемент карточки
-        const innerCard = card.querySelector('.tour-card-inner');
-        
-        // Добавляем обработчик только на переднюю часть карточки
-        frontCard.addEventListener('click', function(event) {
-            // Останавливаем всплытие события, чтобы оно не дошло до родительских элементов
-            event.stopPropagation();
-            
-            // Переворачиваем карточку
-            innerCard.classList.add('flipped');
-            
-            // Устанавливаем таймер для обратного переворота
-            setTimeout(() => {
-                innerCard.classList.remove('flipped');
-            }, 30000); // 5 секунд до обратного переворота
-        });
-    });
-});
+	document.addEventListener('DOMContentLoaded', function() {
+		// Получаем все карточки туров
+		const tourCards = document.querySelectorAll('.tour-card-3d');
+		
+		// Добавляем обработчик события клика для каждой карточки
+		tourCards.forEach(card => {
+		card.addEventListener('click', function() {
+			// Переключаем класс 'flipped' на внутреннем элементе карточки
+			const innerCard = this.querySelector('.tour-card-inner');
+			innerCard.classList.toggle('flipped');
+		});
+		});
+	});
