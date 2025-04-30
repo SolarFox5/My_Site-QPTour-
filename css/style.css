@@ -2090,7 +2090,7 @@ h5,
 }
 
 .contact-form-3d:hover {
-  transform: translateZ(20px);
+  transform: translateZ(0px);
 }
 
 .form-group-3d {
