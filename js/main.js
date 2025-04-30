@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				cardTimers[index] = setTimeout(() => {
 					innerCard.classList.remove('flipped');
 					delete cardTimers[index];
-				}, 15000); // 15 секунд
+				}, 45000); // 15 секунд
 			} else {
 				// Если карточка была возвращена в исходное положение, очищаем таймер
 				if (cardTimers[index]) {
