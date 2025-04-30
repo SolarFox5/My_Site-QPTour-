@@ -2118,9 +2118,7 @@ h5,
   transition: transform 0.3s ease;
 }
 
-.contact-form-3d:hover {
-  transform: translateZ(0px);
-}
+
 
 .form-group-3d {
   position: relative;
