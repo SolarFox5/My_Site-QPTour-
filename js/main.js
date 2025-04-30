@@ -268,53 +268,37 @@ jQuery(document).ready(function ($) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Получаем все карточки туров
-    const tourCards = document.querySelectorAll('.tour-card-3d');
-    // Объект для хранения таймеров для каждой карточки
-    const cardTimers = {};
-    
-    // Добавляем обработчик события клика для каждой карточки
-    tourCards.forEach((card, index) => {
-        card.addEventListener('click', function () {
-            // Сначала возвращаем все карточки в исходное положение, кроме текущей
-            tourCards.forEach((otherCard, otherIndex) => {
-                if (otherCard !== card) {
-                    const innerCard = otherCard.querySelector('.tour-card-inner');
-                    if (innerCard.classList.contains('flipped')) {
-                        innerCard.classList.remove('flipped');
-                        
-                        // Очищаем таймер для этой карточки, если он существует
-                        if (cardTimers[otherIndex]) {
-                            clearTimeout(cardTimers[otherIndex]);
-                            delete cardTimers[otherIndex];
-                        }
-                    }
-                }
-            });
-            
-            // Переключаем класс 'flipped' на внутреннем элементе текущей карточки
-            const innerCard = this.querySelector('.tour-card-inner');
-            innerCard.classList.toggle('flipped');
-            
-            // Если карточка перевернута, устанавливаем таймер на 15 секунд
-            if (innerCard.classList.contains('flipped')) {
-                // Очищаем предыдущий таймер для этой карточки, если он существует
-                if (cardTimers[index]) {
-                    clearTimeout(cardTimers[index]);
-                }
-                
-                // Устанавливаем новый таймер
-                cardTimers[index] = setTimeout(() => {
-                    innerCard.classList.remove('flipped');
-                    delete cardTimers[index];
-                }, 15000); // 15 секунд
-            } else {
-                // Если карточка была возвращена в исходное положение, очищаем таймер
-                if (cardTimers[index]) {
-                    clearTimeout(cardTimers[index]);
-                    delete cardTimers[index];
-                }
-            }
-        });
-    });
+	// Получаем все карточки туров
+	const tourCards = document.querySelectorAll('.tour-card-3d');
+	// Объект для хранения таймеров для каждой карточки
+	const cardTimers = {};
+
+	// Добавляем обработчик события клика для каждой карточки
+	tourCards.forEach((card, index) => {
+		card.addEventListener('click', function () {
+			// Переключаем класс 'flipped' на внутреннем элементе текущей карточки
+			const innerCard = this.querySelector('.tour-card-inner');
+			innerCard.classList.toggle('flipped');
+
+			// Если карточка перевернута, устанавливаем таймер на 15 секунд
+			if (innerCard.classList.contains('flipped')) {
+				// Очищаем предыдущий таймер для этой карточки, если он существует
+				if (cardTimers[index]) {
+					clearTimeout(cardTimers[index]);
+				}
+
+				// Устанавливаем новый таймер
+				cardTimers[index] = setTimeout(() => {
+					innerCard.classList.remove('flipped');
+					delete cardTimers[index];
+				}, 15000); // 15 секунд
+			} else {
+				// Если карточка была возвращена в исходное положение, очищаем таймер
+				if (cardTimers[index]) {
+					clearTimeout(cardTimers[index]);
+					delete cardTimers[index];
+				}
+			}
+		});
+	});
 });
