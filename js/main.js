@@ -311,6 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeBtn = document.querySelector('.close-modal');
     const bookingForm = document.getElementById('bookingForm');
     const tourTitle = document.getElementById('bookingTourTitle');
+    const tourInput = document.getElementById('bookingTourInput');
     const successMessage = document.getElementById('bookingSuccess');
     const closeSuccess = document.querySelector('.close-success');
     
@@ -355,15 +356,21 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             // Получаем название тура из ближайшей карточки
             const card = this.closest('.tour-card-back');
-            const tourName = card.querySelector('h3') ? 
+            const tourName = card ? 
+                           (card.querySelector('h3') ? 
                            card.querySelector('h3').textContent : 
-                           card.querySelector('h5').textContent;
+                           card.querySelector('h5').textContent) :
+                           'Тур';
             
             // Устанавливаем название тура в модальном окне
             tourTitle.textContent = tourName;
+            tourInput.value = tourName;
             
             // Показываем модальное окно
-            modal.classList.add('show');
+            modal.style.display = 'block';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
             document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
         });
     });
@@ -400,78 +407,67 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (bookingForm) {
-        // Обработка отправки формы
+        // Обработка успешной отправки формы
         bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Показываем индикатор загрузки
-            const submitBtn = bookingForm.querySelector('.submit-booking');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Отправка...';
-            submitBtn.disabled = true;
-            
-            // Получаем данные формы
+            // Formspree обрабатывает отправку, но мы можем добавить дополнительную логику
+            // Например, сохранение в localStorage для резервного копирования
             const formData = new FormData(bookingForm);
             const bookingData = {
                 tourName: tourTitle.textContent,
-                name: formData.get('userName'),
+                name: formData.get('name'),
                 contactMethod: formData.get('contactMethod'),
-                email: formData.get('userEmail'),
-                phone: formData.get('userPhone'),
-                message: formData.get('userMessage'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                message: formData.get('message'),
                 date: new Date().toISOString()
             };
             
-            console.log('Данные бронирования:', bookingData);
-            
-            // Сохраняем данные локально
-            saveBookingLocally(bookingData);
-            
-            // Имитация задержки отправки
-            setTimeout(() => {
-                // Скрываем форму и показываем сообщение об успехе
-                bookingForm.style.display = 'none';
-                successMessage.style.display = 'block';
-                
-                // Сбрасываем форму для следующего использования
-                bookingForm.reset();
-                
-                // Восстанавливаем кнопку
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
+            // Сохраняем в localStorage как резервную копию
+            const savedBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            savedBookings.push(bookingData);
+            localStorage.setItem('bookings', JSON.stringify(savedBookings));
         });
     }
     
-    // Функция для сохранения данных локально
-    function saveBookingLocally(data) {
-        const savedBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-        savedBookings.push({
-            ...data,
-            id: Date.now()
-        });
-        localStorage.setItem('bookings', JSON.stringify(savedBookings));
-        console.log('Данные сохранены локально:', data);
-    }
-    
-    // Функция для отправки данных на сервер (когда он будет доступен)
-    function sendBookingData(data) {
-        return fetch('http://localhost:3000/api/booking', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => {
-                    throw new Error(err.error || 'Ошибка при отправке данных');
-                }).catch(() => {
-                    throw new Error('Ошибка при отправке данных');
+    // Обработка ответа от Formspree
+    window.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("bookingForm");
+        
+        async function handleSubmit(e) {
+            e.preventDefault();
+            const status = document.createElement("div");
+            status.style.marginTop = "10px";
+            
+            try {
+                const data = new FormData(e.target);
+                const response = await fetch(e.target.action, {
+                    method: form.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
                 });
+                
+                const json = await response.json();
+                
+                if (response.ok) {
+                    // Форма успешно отправлена
+                    bookingForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    form.reset();
+                } else {
+                    // Ошибка при отправке
+                    throw new Error(json.error || "Произошла ошибка при отправке формы");
+                }
+            } catch (error) {
+                status.innerHTML = "Произошла ошибка при отправке формы";
+                status.style.color = "red";
+                form.appendChild(status);
             }
-            return response.json();
-        });
-    }
+        }
+        
+        if (form) {
+            form.addEventListener("submit", handleSubmit);
+        }
+    });
 });
