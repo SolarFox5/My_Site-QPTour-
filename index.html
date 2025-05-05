@@ -347,7 +347,6 @@
       </div>
     </div>
 
-    <!-- 3D -->
     <div class="site-section" id="map-section">
       <div class="container">
         <div class="row">
@@ -367,13 +366,12 @@
             <p><a href="map.html">Узнать больше</a></p>
           </div>
           <div class="col-md-6">
-            <a href="map.html" class="mb-4 d-block">
-              <img src="images/planet.png" alt="Image" class="img-fluid rounded">
-            </a>
+            <div id="simple-globe-container" style="height: 400px; border-radius: 15px; overflow: hidden;"></div>
           </div>
         </div>
       </div>
     </div>
+
 
     <!-- Вопросы -->
     <div class="site-section bg-gray " id="faq-section">
@@ -504,6 +502,13 @@
   <script src="js/jquery.sticky.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="js/main.js"></script>
+
+  <!-- Three.js и Globe.gl для простого глобуса -->
+  <script src="https://unpkg.com/three@0.137.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/globe.gl@2.26.8/dist/globe.gl.min.js"></script>
+  <!-- Скрипт для простого глобуса -->
+  <script src="js/simple-globe.js"></script>
+
 </body>
 
 
