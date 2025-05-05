@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Создаем экземпляр Globe
     const globe = Globe()
         .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-        .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
         .width(globeContainer.clientWidth)
         .height(globeContainer.clientHeight)
         .showAtmosphere(true)
         .atmosphereColor('rgba(255, 81, 0, 0.7)')
         .atmosphereAltitude(0.15)
+        .backgroundColor('rgba(0,0,0,0)')
         (globeContainer);
 
     // Добавляем автоматическое вращение
