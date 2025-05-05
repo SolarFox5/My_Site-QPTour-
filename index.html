@@ -460,6 +460,7 @@
     </div>
 </div>
 
+
     <button id="backToTop" class="back-to-top">
       <span class="arrow-up">↑</span>
     </button>
@@ -480,6 +481,72 @@
   <script src="js/typed.js"></script>
   <script src="js/main.js"></script>
 </body>
+
+
+<!-- Модальное окно бронирования -->
+<div class="booking-modal" id="bookingModal">
+  <div class="booking-modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Забронировать тур</h2>
+    <p class="tour-title" id="bookingTourTitle">Название тура</p>
+    
+    <form id="bookingForm">
+      <div class="form-group">
+        <label for="userName">Ваше имя*</label>
+        <input type="text" id="userName" name="userName" required>
+      </div>
+      
+      <div class="contact-choice">
+        <div class="contact-option">
+          <input type="radio" id="contactEmail" name="contactMethod" value="email" checked>
+          <label for="contactEmail">Email</label>
+        </div>
+        <div class="contact-option">
+          <input type="radio" id="contactPhone" name="contactMethod" value="phone">
+          <label for="contactPhone">Телефон</label>
+        </div>
+      </div>
+      
+      <div class="form-group" id="emailGroup">
+        <label for="userEmail">Ваш Email*</label>
+        <input type="email" id="userEmail" name="userEmail" required>
+      </div>
+      
+      <div class="form-group" id="phoneGroup" style="display: none;">
+        <label for="userPhone">Ваш телефон*</label>
+        <input type="tel" id="userPhone" name="userPhone" placeholder="+7 (___) ___-__-__">
+      </div>
+      
+      <div class="form-group">
+        <label for="userMessage">Комментарий</label>
+        <textarea id="userMessage" name="userMessage" rows="3"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label class="checkbox-container">
+          <input type="checkbox" id="userAgreement" name="userAgreement" required>
+          <span class="checkmark"></span>
+          Я согласен на обработку персональных данных
+        </label>
+      </div>
+      
+      <button type="submit" class="submit-booking">Отправить заявку</button>
+    </form>
+    
+    <div id="bookingSuccess" style="display: none;">
+      <div class="success-message">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+        <h3>Заявка успешно отправлена!</h3>
+        <p>Мы свяжемся с вами в ближайшее время.</p>
+        <button class="close-success">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Футер -->
 <footer class="site-footer">
   <div class="container">

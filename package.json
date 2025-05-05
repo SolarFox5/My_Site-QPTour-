@@ -1,0 +1,30 @@
+{
+  "name": "my_site-qptour-",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000T\u0000Q\u0000P\u0000T\u0000o\u0000u\u0000r\u0000\r\u0000 \u0000[\u0000\u001f\u0004>\u0004A\u0004<\u0004>\u0004B\u0004@\u00045\u0004B\u0004L\u0004 \u0000A\u00040\u00049\u0004B\u0004]\u0000(\u0000h\u0000t\u0000t\u0000p\u0000s\u0000:\u0000/\u0000/\u0000u\u0000s\u0000e\u0000r\u0000n\u0000a\u0000m\u0000e\u0000.\u0000g\u0000i\u0000t\u0000h\u0000u\u0000b\u0000.\u0000i\u0000o\u0000/\u0000r\u0000e\u0000p\u0000o\u0000s\u0000i\u0000t\u0000o\u0000r\u0000y\u0000-\u0000n\u0000a\u0000m\u0000e\u0000/\u0000)\u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SolarFox5/My_Site-QPTour-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SolarFox5/My_Site-QPTour-/issues"
+  },
+  "homepage": "https://github.com/SolarFox5/My_Site-QPTour-#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "nodemailer": "^7.0.2",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
