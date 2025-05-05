@@ -19,7 +19,7 @@ const db = new sqlite3.Database('./bookings.db', (err) => {
         console.error('Ошибка при подключении к базе данных:', err.message);
     } else {
         console.log('Подключение к базе данных SQLite установлено');
-        
+
         // Создаем таблицу, если она не существует
         db.run(`CREATE TABLE IF NOT EXISTS bookings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,29 +36,29 @@ const db = new sqlite3.Database('./bookings.db', (err) => {
 
 // Настройка почтового транспорта
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: 'mail',
     auth: {
-        user: 'your-email@gmail.com', // Замените на свой email
-        pass: 'your-password' // Замените на свой пароль
+        user: 'kashinigor327@mail.ru', // Замените на свой email
+        pass: 'Igor_2002' // Замените на свой пароль
     }
 });
 
 // Маршрут для обработки бронирований
 app.post('/api/booking', (req, res) => {
     const { tourName, name, contactMethod, email, phone, message } = req.body;
-    
+
     // Сохраняем данные в базу
     const sql = `INSERT INTO bookings (tour_name, name, contact_method, email, phone, message) 
                 VALUES (?, ?, ?, ?, ?, ?)`;
-    
-    db.run(sql, [tourName, name, contactMethod, email, phone, message], function(err) {
+
+    db.run(sql, [tourName, name, contactMethod, email, phone, message], function (err) {
         if (err) {
             console.error('Ошибка при сохранении данных:', err.message);
             return res.status(500).json({ error: 'Ошибка при сохранении данных' });
         }
-        
+
         console.log(`Бронирование сохранено с ID: ${this.lastID}`);
-        
+
         // Отправляем email, если выбран этот метод контакта
         if (contactMethod === 'email' && email) {
             const mailOptions = {
@@ -73,7 +73,7 @@ app.post('/api/booking', (req, res) => {
                     <p>С уважением,<br>Команда QPTour</p>
                 `
             };
-            
+
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     console.error('Ошибка при отправке email:', error);
@@ -82,11 +82,11 @@ app.post('/api/booking', (req, res) => {
                 }
             });
         }
-        
-        res.status(201).json({ 
-            success: true, 
+
+        res.status(201).json({
+            success: true,
             message: 'Бронирование успешно сохранено',
-            bookingId: this.lastID 
+            bookingId: this.lastID
         });
     });
 });
