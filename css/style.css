@@ -2560,3 +2560,20 @@ h5,
     right: 15px;
   }
 }
+
+/* Стили для контейнера глобуса */
+#simple-globe-container {
+  height: 400px;
+  
+  
+  
+}
+
+
+
+@media (max-width: 768px) {
+  #simple-globe-container {
+    height: 300px;
+    margin-top: 20px;
+  }
+}
