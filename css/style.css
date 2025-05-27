@@ -2361,7 +2361,7 @@ h5,
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  
 }
 
 .back-to-top:hover {
@@ -2576,3 +2576,7 @@ h5,
     margin-top: 20px;
   }
 }
+
+
+
+
