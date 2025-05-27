@@ -240,8 +240,8 @@ jQuery(document).ready(function ($) {
 	siteScroll();
 
 	var counter = function () {
-		$('#about-section').waypoint(function(direction) {
-			if(direction === 'down' && !$(this.element).hasClass('ftco-animated')) {
+		$('#about-section').waypoint(function (direction) {
+			if (direction === 'down' && !$(this.element).hasClass('ftco-animated')) {
 				// Проверяем, существует ли $.animateNumber
 				if ($ && $.animateNumber && $.animateNumber.numberStepFactories) {
 					var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
@@ -307,171 +307,192 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Получаем элементы модального окна
-    const modal = document.getElementById('bookingModal');
-    if (!modal) return; // Если модального окна нет, прекращаем выполнение
-    
-    const closeBtn = document.querySelector('.close-modal');
-    const bookingForm = document.getElementById('bookingForm');
-    const tourTitle = document.getElementById('bookingTourTitle');
-    const tourInput = document.getElementById('bookingTourInput');
-    const successMessage = document.getElementById('bookingSuccess');
-    const closeSuccess = document.querySelector('.close-success');
-    
-    // Получаем все кнопки бронирования
-    const bookButtons = document.querySelectorAll('.price-btn');
-    
-    // Переключение между полями email и телефон
-    const contactEmail = document.getElementById('contactEmail');
-    const contactPhone = document.getElementById('contactPhone');
-    const emailGroup = document.getElementById('emailGroup');
-    const phoneGroup = document.getElementById('phoneGroup');
-    const emailInput = document.getElementById('userEmail');
-    const phoneInput = document.getElementById('userPhone');
-    
-    if (contactEmail && contactPhone) {
-        // Обработчики для переключения метода контакта
-        contactEmail.addEventListener('change', function() {
-            emailGroup.style.display = 'block';
-            phoneGroup.style.display = 'none';
-            emailInput.required = true;
-            phoneInput.required = false;
-        });
-        
-        contactPhone.addEventListener('change', function() {
-            emailGroup.style.display = 'none';
-            phoneGroup.style.display = 'block';
-            emailInput.required = false;
-            phoneInput.required = true;
-        });
-    }
-    
-    if (phoneInput) {
-        // Маска для телефона
-        phoneInput.addEventListener('input', function(e) {
-            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-            e.target.value = !x[2] ? x[1] : '+' + x[1] + ' (' + x[2] + ') ' + (x[3] ? x[3] + '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
-        });
-    }
-    
-    // Обработчик для кнопок бронирования
-    bookButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Получаем название тура из ближайшей карточки
-            const card = this.closest('.tour-card-back');
-            const tourName = card ? 
-                           (card.querySelector('h3') ? 
-                           card.querySelector('h3').textContent : 
-                           card.querySelector('h5').textContent) :
-                           'Тур';
-            
-            // Устанавливаем название тура в модальном окне
-            tourTitle.textContent = tourName;
-            tourInput.value = tourName;
-            
-            // Показываем модальное окно
-            modal.style.display = 'block';
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-            document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
-        });
-    });
-    
-    if (closeBtn) {
-        // Закрытие модального окна
-        closeBtn.addEventListener('click', function() {
-            closeModal();
-        });
-    }
-    
-    // Закрытие при клике вне модального окна
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-    
-    if (closeSuccess) {
-        // Закрытие окна успешной отправки
-        closeSuccess.addEventListener('click', function() {
-            successMessage.style.display = 'none';
-            closeModal();
-        });
-    }
-    
-    // Функция закрытия модального окна
-    function closeModal() {
-        modal.classList.remove('show');
-        setTimeout(() => {
-            modal.style.display = 'none';
-            document.body.style.overflow = ''; // Разблокируем прокрутку страницы
-        }, 300);
-    }
-    
-    if (bookingForm) {
-        // Обработка успешной отправки формы
-        bookingForm.addEventListener('submit', function(e) {
-            // Formspree обрабатывает отправку, но мы можем добавить дополнительную логику
-            // Например, сохранение в localStorage для резервного копирования
-            const formData = new FormData(bookingForm);
-            const bookingData = {
-                tourName: tourTitle.textContent,
-                name: formData.get('name'),
-                contactMethod: formData.get('contactMethod'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                message: formData.get('message'),
-                date: new Date().toISOString()
-            };
-            
-            // Сохраняем в localStorage как резервную копию
-            const savedBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-            savedBookings.push(bookingData);
-            localStorage.setItem('bookings', JSON.stringify(savedBookings));
-        });
-    }
-    
-    // Обработка ответа от Formspree
-    window.addEventListener("DOMContentLoaded", function() {
-        const form = document.getElementById("bookingForm");
-        
-        async function handleSubmit(e) {
-            e.preventDefault();
-            const status = document.createElement("div");
-            status.style.marginTop = "10px";
-            
-            try {
-                const data = new FormData(e.target);
-                const response = await fetch(e.target.action, {
-                    method: form.method,
-                    body: data,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                const json = await response.json();
-                
-                if (response.ok) {
-                    // Форма успешно отправлена
-                    bookingForm.style.display = 'none';
-                    successMessage.style.display = 'block';
-                    form.reset();
-                } else {
-                    // Ошибка при отправке
-                    throw new Error(json.error || "Произошла ошибка при отправке формы");
-                }
-            } catch (error) {
-                status.innerHTML = "Произошла ошибка при отправке формы";
-                status.style.color = "red";
-                form.appendChild(status);
-            }
-        }
-        
-        if (form) {
-            form.addEventListener("submit", handleSubmit);
-        }
-    });
+document.addEventListener('DOMContentLoaded', function () {
+	// Получаем элементы модального окна
+	const modal = document.getElementById('bookingModal');
+	if (!modal) return; // Если модального окна нет, прекращаем выполнение
+
+	const closeBtn = document.querySelector('.close-modal');
+	const bookingForm = document.getElementById('bookingForm');
+	const tourTitle = document.getElementById('bookingTourTitle');
+	const tourInput = document.getElementById('bookingTourInput');
+	const successMessage = document.getElementById('bookingSuccess');
+	const closeSuccess = document.querySelector('.close-success');
+
+	// Получаем все кнопки бронирования
+	const bookButtons = document.querySelectorAll('.price-btn');
+
+	// Переключение между полями email и телефон
+	const contactEmail = document.getElementById('contactEmail');
+	const contactPhone = document.getElementById('contactPhone');
+	const emailGroup = document.getElementById('emailGroup');
+	const phoneGroup = document.getElementById('phoneGroup');
+	const emailInput = document.getElementById('userEmail');
+	const phoneInput = document.getElementById('userPhone');
+
+	if (contactEmail && contactPhone) {
+		// Обработчики для переключения метода контакта
+		contactEmail.addEventListener('change', function () {
+			emailGroup.style.display = 'block';
+			phoneGroup.style.display = 'none';
+			emailInput.required = true;
+			phoneInput.required = false;
+		});
+
+		contactPhone.addEventListener('change', function () {
+			emailGroup.style.display = 'none';
+			phoneGroup.style.display = 'block';
+			emailInput.required = false;
+			phoneInput.required = true;
+		});
+	}
+
+	if (phoneInput) {
+		// Маска для телефона
+		phoneInput.addEventListener('input', function (e) {
+			let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+			e.target.value = !x[2] ? x[1] : '+' + x[1] + ' (' + x[2] + ') ' + (x[3] ? x[3] + '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+		});
+	}
+
+	// Обработчик для кнопок бронирования
+	bookButtons.forEach(button => {
+		button.addEventListener('click', function () {
+			// Получаем название тура из ближайшей карточки
+			const card = this.closest('.tour-card-back');
+			const tourName = card ?
+				(card.querySelector('h3') ?
+					card.querySelector('h3').textContent :
+					card.querySelector('h5').textContent) :
+				'Тур';
+
+			// Устанавливаем название тура в модальном окне
+			tourTitle.textContent = tourName;
+			tourInput.value = tourName;
+
+			// Показываем модальное окно
+			modal.style.display = 'block';
+			setTimeout(() => {
+				modal.classList.add('show');
+			}, 10);
+			document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+		});
+	});
+
+	if (closeBtn) {
+		// Закрытие модального окна
+		closeBtn.addEventListener('click', function () {
+			closeModal();
+		});
+	}
+
+	// Закрытие при клике вне модального окна
+	window.addEventListener('click', function (event) {
+		if (event.target === modal) {
+			closeModal();
+		}
+	});
+
+	if (closeSuccess) {
+		// Закрытие окна успешной отправки
+		closeSuccess.addEventListener('click', function () {
+			successMessage.style.display = 'none';
+			closeModal();
+		});
+	}
+
+	// Функция закрытия модального окна
+	function closeModal() {
+		modal.classList.remove('show');
+		setTimeout(() => {
+			modal.style.display = 'none';
+			document.body.style.overflow = ''; // Разблокируем прокрутку страницы
+		}, 300);
+	}
+
+	if (bookingForm) {
+		// Обработка успешной отправки формы
+		bookingForm.addEventListener('submit', function (e) {
+			// Formspree обрабатывает отправку, но мы можем добавить дополнительную логику
+			// Например, сохранение в localStorage для резервного копирования
+			const formData = new FormData(bookingForm);
+			const bookingData = {
+				tourName: tourTitle.textContent,
+				name: formData.get('name'),
+				contactMethod: formData.get('contactMethod'),
+				email: formData.get('email'),
+				phone: formData.get('phone'),
+				message: formData.get('message'),
+				date: new Date().toISOString()
+			};
+
+			// Сохраняем в localStorage как резервную копию
+			const savedBookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+			savedBookings.push(bookingData);
+			localStorage.setItem('bookings', JSON.stringify(savedBookings));
+		});
+	}
+
+	// Обработка ответа от Formspree
+	window.addEventListener("DOMContentLoaded", function () {
+		const form = document.getElementById("bookingForm");
+
+		async function handleSubmit(e) {
+			e.preventDefault();
+			const status = document.createElement("div");
+			status.style.marginTop = "10px";
+
+			try {
+				const data = new FormData(e.target);
+				const response = await fetch(e.target.action, {
+					method: form.method,
+					body: data,
+					headers: {
+						'Accept': 'application/json'
+					}
+				});
+
+				const json = await response.json();
+
+				if (response.ok) {
+					// Форма успешно отправлена
+					bookingForm.style.display = 'none';
+					successMessage.style.display = 'block';
+					form.reset();
+				} else {
+					// Ошибка при отправке
+					throw new Error(json.error || "Произошла ошибка при отправке формы");
+				}
+			} catch (error) {
+				status.innerHTML = "Произошла ошибка при отправке формы";
+				status.style.color = "red";
+				form.appendChild(status);
+			}
+		}
+
+		if (form) {
+			form.addEventListener("submit", handleSubmit);
+		}
+	});
+});
+// Кнопка "Наверх"
+$(document).ready(function () {
+	var backToTopButton = $('#backToTop');
+
+	// Показать/скрыть кнопку при скролле
+	$(window).scroll(function () {
+		if ($(this).scrollTop() > 300) {
+			backToTopButton.addClass('show');
+		} else {
+			backToTopButton.removeClass('show');
+		}
+	});
+
+	// Плавная прокрутка наверх при клике
+	backToTopButton.click(function (e) {
+		e.preventDefault();
+		$('html, body').animate({
+			scrollTop: 0
+		}, 800);
+	});
 });
