@@ -2341,41 +2341,40 @@ h5,
 }
 
 
+/* Кнопка "Наверх" */
 .back-to-top {
   position: fixed;
   bottom: 30px;
   right: 30px;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #ff5100, #ffd700);
-  border: none;
+  background-color: #ff5100;
   color: white;
-  font-size: 24px;
+  border: none;
+  border-radius: 50%;
   cursor: pointer;
+  font-size: 18px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px);
   transition: all 0.3s ease;
-  z-index: 1000;
-  box-shadow: 0 5px 15px rgba(255, 139, 0, 0.3);
-}
-
-.back-to-top.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 .back-to-top:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(255, 139, 0, 0.4);
+  background-color: #ff5100;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
 }
 
-.arrow-up {
-  display: block;
-  line-height: 1;
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
 }
+
 
 .controls {
   position: absolute;
