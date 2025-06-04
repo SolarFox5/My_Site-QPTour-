@@ -124,40 +124,38 @@
 
     <!-- Дагестан -->
     <div class="site-section">
-      <div class="block__73694 mb-2 " id="services-section">
-        <div class="card-info-hint">
-          <i class="icon-info-circle"></i> Нажмите на карточку для просмотра подробной информации
-        </div>
-        <div class="tours-container">
-          <div class="container ">
-            <div class="tour-card-3d">
-              <div class="tour-card-inner">
-                <div class="tour-card-front">
-                  <img src="images/photo_1.png" class="tour-image" alt="Дагестан">
-                  <div class="tour-content">
-                    <h3>Волшебный Дагестан</h3>
-                    <p>5 дней все включено</p>
-                    <div class="price-tag">34 900 ₽</div>
-                  </div>
-                </div>
-                <div class="tour-card-back">
-                  <h5>Отдых, насыщенный культурой, кулинарией и потрясающими пейзажами. </h5>
-                  <p>➤ Отправься с нами в уникальное путешествие по загадочному Дагестану: безопасность, гостеприимство
-                    и незабываемые приключения гарантированы!
-                    ДОВЕРЬ НАМ СВОИ СОМНЕНИЯ, И МЫ СДЕЛАЕМ ТВОЕ ПУТЕШЕСТВИЕ НЕЗАБЫВАЕМЫМ!</p>
-                  <h5>Подробности тура:</h5>
-                  <ul>
-                    <li>Проживание в лучших отелях</li>
-                    <li>Экскурсии по древним городам</li>
-                    <li>Национальная кухня</li>
-
-                  </ul>
-                  <button class="price-btn btn-primary">Забронировать</button>
-                </div>
+  <div class="block__73694 mb-2 " id="services-section">
+    <div class="card-info-hint">
+      <i class="icon-info-circle"></i> Нажмите на карточку для просмотра подробной информации
+    </div>
+    <div class="tours-container">
+      <div class="container">
+        <div class="tour-card-3d">
+          <div class="tour-card-inner">
+            <div class="tour-card-front">
+              <img src="images/photo_1.png" class="tour-image" alt="Дагестан">
+              <div class="tour-content">
+                <h3>Волшебный Дагестан</h3>
+                <p>5 дней все включено</p>
+                <div class="price-tag">34 900 ₽</div>
               </div>
             </div>
+            <div class="tour-card-back">
+              <h5 class="card-back-title">Отдых, насыщенный культурой и пейзажами</h5>
+              <p class="card-back-description">➤ Уникальное путешествие по Дагестану: безопасность, гостеприимство и приключения!</p>
+              <div class="card-back-details">
+                <h5>Включено:</h5>
+                <ul>
+                  <li>Проживание в лучших отелях</li>
+                  <li>Экскурсии по древним городам</li>
+                  <li>Национальная кухня</li>
+                </ul>
+              </div>
+              <button class="price-btn btn-primary">Забронировать</button>
+            </div>
           </div>
-
+        </div>
+      </div>
 
 
           <!-- Грузия -->
@@ -324,7 +322,12 @@
         <div class="row justify-content-center mb-4 block-img-video-1-wrap">
           <div class="col-md-12 mb-5">
             <figure class="block-img-video-1" data-aos="fade">
-              <a href="https://rutube.ru/video/private/fc4b62970195a9a3b6ce8c00ff49dc5b/?p=CCEGQ_sBFbno6DEyI93dVg" data-fancybox data-ratio="2" class="video-preview">
+              <!-- Открытие в новой вкладке с предупреждением -->
+              <a href="https://rutube.ru/video/private/fc4b62970195a9a3b6ce8c00ff49dc5b/?p=CCEGQ_sBFbno6DEyI93dVg" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="video-preview" 
+                id="rutube-video-link">
                 <div class="play-button">
                   <span class="icon-play"></span>
                 </div>
@@ -333,6 +336,32 @@
             </figure>
           </div>
         </div>
+    
+        <div class="featured-content" data-aos="fade-up">
+          <h2 class="featured-title">Актуальное предложение - Лето 2025!</h2>
+          <h3 class="featured-subtitle mb-3">Тур в Абхазию на двоих: «В седле, на внедорожниках и пешком»</h3>
+          <div class="tour-details">
+            <span class="tour-date">📅 8 июля - 11 июля</span>
+            <span class="tour-duration">⏱ 4 дня</span>
+            <span class="tour-price">💎 Специальная цена</span>
+          </div>
+          <button class="price-btn book-now-btn">Забронировать сейчас</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Модальное окно с предупреждением -->
+    <div id="video-modal" class="custom-modal">
+      <div class="custom-modal-content">
+        <span class="close-modal-btn">&times;</span>
+        <h3>Открытие видео</h3>
+        <p>Видео откроется в новой вкладке. Продолжить?</p>
+        <div class="modal-buttons">
+          <button id="continue-to-video" class="btn btn-primary">Продолжить</button>
+          <button id="cancel-video" class="btn btn-outline-secondary">Отмена</button>
+        </div>
+      </div>
+    </div>
 
         <div class="featured-content" data-aos="fade-up">
           <h2 class="featured-title">Актуальное предложение - Лето 2025!</h2>
