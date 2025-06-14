@@ -496,3 +496,87 @@ $(document).ready(function () {
 		}, 800);
 	});
 });
+
+// Улучшение взаимодействия с карточками туров на мобильных устройствах
+$(document).ready(function() {
+	// Определяем, является ли устройство мобильным
+	const isMobile = window.matchMedia("(max-width: 767px)").matches;
+	
+	if (isMobile) {
+	  // Добавляем обработчик для закрытия карточки при клике на кнопку "Забронировать"
+	$('.tour-card-back .price-btn').on('click', function(e) {
+		e.stopPropagation(); // Предотвращаем всплытие события
+		
+		// Сохраняем ссылку на текущую карточку
+		const currentCard = $(this).closest('.tour-card-inner');
+		
+		// Открываем модальное окно бронирования
+		const tourName = currentCard.find('.tour-card-front h3').text();
+		$('#bookingTourTitle').text(tourName);
+		$('#bookingTourInput').val(tourName);
+		$('#bookingModal').css('display', 'block');
+		
+		// Закрываем карточку через небольшую задержку
+		setTimeout(function() {
+		currentCard.removeClass('flipped');
+		}, 300);
+	});
+	
+	  // Добавляем подсказку о возможности скроллинга
+	$('.tour-card-back').each(function() {
+		const cardBack = $(this);
+		
+		// Проверяем, нужен ли скроллинг
+		if (this.scrollHeight > this.clientHeight) {
+		  // Добавляем класс для индикатора скроллинга
+		cardBack.addClass('scrollable');
+		
+		  // Скрываем индикатор при скроллинге
+		cardBack.on('scroll', function() {
+			if (this.scrollTop > 10) {
+			cardBack.addClass('scrolled');
+			} else {
+			cardBack.removeClass('scrolled');
+			}
+		});
+		}
+	});
+	}
+});
+
+
+// Обработка клика по видео Rutube
+$(document).ready(function() {
+	// Сохраняем URL видео
+	let videoUrl = '';
+	
+	// Перехватываем клик по ссылке на видео
+	$('#rutube-video-link').on('click', function(e) {
+	e.preventDefault();
+	videoUrl = $(this).attr('href');
+	
+	  // Показываем модальное окно с предупреждением
+	$('#video-modal').css('display', 'block');
+	});
+	
+	// Обработка клика по кнопке "Продолжить"
+	$('#continue-to-video').on('click', function() {
+	  // Открываем видео в новой вкладке
+	window.open(videoUrl, '_blank');
+	  // Закрываем модальное окно
+	$('#video-modal').css('display', 'none');
+	});
+	
+	// Обработка клика по кнопке "Отмена"
+	$('#cancel-video, .close-modal-btn').on('click', function() {
+	  // Закрываем модальное окно
+	$('#video-modal').css('display', 'none');
+	});
+	
+	// Закрытие модального окна при клике вне его содержимого
+	$(window).on('click', function(e) {
+	if ($(e.target).is('#video-modal')) {
+		$('#video-modal').css('display', 'none');
+	}
+	});
+});

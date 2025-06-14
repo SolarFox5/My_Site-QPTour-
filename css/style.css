@@ -2578,5 +2578,158 @@ h5,
 }
 
 
+/* Адаптивные стили для карточек туров */
+@media (max-width: 767px) {
+  /* Уменьшаем размер шрифта на задней стороне карточки */
+  .tour-card-back h5.card-back-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .tour-card-back p.card-back-description {
+    font-size: 13px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  
+  .card-back-details h5 {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .tour-card-back ul {
+    margin-bottom: 10px;
+    padding-left: 20px;
+  }
+  
+  .tour-card-back ul li {
+    font-size: 13px;
+    margin-bottom: 2px;
+    line-height: 1.2;
+  }
+  
+  /* Уменьшаем размер кнопки */
+  .tour-card-back .price-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  /* Увеличиваем высоту карточки при необходимости */
+  .tour-card-inner {
+    min-height: 380px;
+  }
+  
+  /* Улучшаем отступы внутри карточки */
+  .tour-card-back {
+    padding: 15px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Оптимизация для очень маленьких экранов */
+  @media (max-width: 350px) {
+    .tour-card-back h5.card-back-title {
+      font-size: 14px;
+    }
+    
+    .tour-card-back p.card-back-description {
+      font-size: 12px;
+    }
+    
+    .tour-card-back ul li {
+      font-size: 12px;
+    }
+    
+    .tour-card-back .price-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+  }
+}
+
+/* Улучшение читаемости текста на задней стороне карточки */
+.tour-card-back {
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  color: #333;
+}
+
+/* Добавляем скроллинг для очень длинного контента на мобильных устройствах */
+@media (max-width: 480px) {
+  .tour-card-back {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Для плавного скроллинга на iOS */
+  }
+  
+  /* Индикатор скроллинга */
+  .tour-card-back::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 2px;
+    opacity: 0.7;
+  }
+}
 
 
+/* Стили для модального окна предупреждения */
+.custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
+  animation: fadeIn 0.3s ease;
+}
+
+.custom-modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: slideIn 0.4s ease;
+}
+
+.close-modal-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-modal-btn:hover {
+  color: #333;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideIn {
+  from {transform: translateY(-50px); opacity: 0;}
+  to {transform: translateY(0); opacity: 1;}
+}
