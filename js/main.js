@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			const innerCard = this.querySelector('.tour-card-inner');
 			innerCard.classList.toggle('flipped');
 
-			// Если карточка перевернута, устанавливаем таймер на 15 секунд
+			// Если карточка перевернута, устанавливаем таймер на 45 секунд
 			if (innerCard.classList.contains('flipped')) {
 				// Очищаем предыдущий таймер для этой карточки, если он существует
 				if (cardTimers[index]) {
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				cardTimers[index] = setTimeout(() => {
 					innerCard.classList.remove('flipped');
 					delete cardTimers[index];
-				}, 45000); // 15 секунд
+				}, 45000); // 45 секунд
 			} else {
 				// Если карточка была возвращена в исходное положение, очищаем таймер
 				if (cardTimers[index]) {
