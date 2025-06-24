@@ -320,7 +320,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	const closeSuccess = document.querySelector('.close-success');
 
 	// Получаем все кнопки бронирования
-	const bookButtons = document.querySelectorAll('.price-btn');
+	// Получаем все кнопки бронирования
+	const bookButtons = document.querySelectorAll('.price-btn, .book-now-btn');
+
 
 	// Переключение между полями email и телефон
 	const contactEmail = document.getElementById('contactEmail');
@@ -355,29 +357,41 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	// Обработчик для кнопок бронирования
-	bookButtons.forEach(button => {
-		button.addEventListener('click', function () {
-			// Получаем название тура из ближайшей карточки
-			const card = this.closest('.tour-card-back');
-			const tourName = card ?
-				(card.querySelector('h3') ?
-					card.querySelector('h3').textContent :
-					card.querySelector('h5').textContent) :
-				'Тур';
-
-			// Устанавливаем название тура в модальном окне
-			tourTitle.textContent = tourName;
-			tourInput.value = tourName;
-
-			// Показываем модальное окно
-			modal.style.display = 'block';
-			setTimeout(() => {
-				modal.classList.add('show');
-			}, 10);
-			document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
-		});
-	});
+// Обработчик для кнопок бронирования
+bookButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Получаем название тура из ближайшей карточки
+        const card = this.closest('.tour-card-3d') || this.closest('.tour-card-back') || this.closest('.featured-content');
+        let tourName = 'Тур';
+        
+        if (card) {
+            // Ищем название тура в разных местах
+            const titleElement = card.querySelector('h3') || 
+                                card.querySelector('h5') || 
+                                card.querySelector('.tour-content h3') ||
+                                card.querySelector('.featured-title') ||
+                                card.querySelector('.featured-subtitle');
+            
+            if (titleElement) {
+                tourName = titleElement.textContent.trim();
+            }
+        }
+        
+        // Устанавливаем название тура в модальном окне
+        tourTitle.textContent = tourName;
+        tourInput.value = tourName;
+        
+        // Показываем модальное окно
+        modal.style.display = 'block';
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+        document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+    });
+});
 
 	if (closeBtn) {
 		// Закрытие модального окна
